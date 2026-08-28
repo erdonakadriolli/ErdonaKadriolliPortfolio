@@ -27,7 +27,8 @@ import {
   Languages as LanguagesIcon,
   ChevronRight,
   Building2,
-  Calendar
+  Calendar,
+  Layers
 } from 'lucide-react';
 
 interface AboutProps {
@@ -38,7 +39,7 @@ const About: React.FC<AboutProps> = ({ lang }) => {
   const [activeSkillCategory, setActiveSkillCategory] = useState<string>('All');
   const isSq = lang === 'sq';
 
-  const skillCategories = ['All', 'Data & AI', 'Backend', 'Frontend', 'Tools & Cloud', 'Soft Skills'];
+  const skillCategories = ['All', 'Full-Stack', 'Data & AI', 'Backend', 'Frontend', 'Tools & Cloud', 'Soft Skills'];
 
   const filteredSkills = activeSkillCategory === 'All' 
     ? SKILLS 
@@ -46,6 +47,7 @@ const About: React.FC<AboutProps> = ({ lang }) => {
 
   const getCategoryIcon = (cat: string) => {
     switch (cat) {
+      case 'Full-Stack': return <Layers className="w-4 h-4 text-violet-600 dark:text-violet-400" />;
       case 'Data & AI': return <Brain className="w-4 h-4 text-blue-600 dark:text-blue-400" />;
       case 'Backend': return <Database className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />;
       case 'Frontend': return <Code className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />;

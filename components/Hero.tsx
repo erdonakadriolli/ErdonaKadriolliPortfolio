@@ -37,15 +37,15 @@ const Hero: React.FC<HeroProps> = ({ lang, onOpenResume, onOpenChat, showAiChat 
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 shadow-xs">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <span className="text-xs font-bold text-blue-800 dark:text-blue-300 tracking-wide">
-                {isSq ? 'E hapur për pozita & praktika në Data/AI & Software' : 'Open for Software & Data/AI Engineering Roles'}
+                {isSq ? 'E hapur për pozita & praktika në Data/AI & Full-Stack' : 'Open for Full-Stack & Data/AI Engineering Roles'}
               </span>
             </div>
             
             {/* Main Headline */}
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.08]">
-              {isSq ? 'Inxhinieri e të Dhënave &' : 'Data Engineering &'}{' '}
+              {isSq ? 'Data, AI &' : 'Data, AI &'}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 dark:from-blue-400 dark:via-indigo-400 dark:to-cyan-400">
-                {isSq ? 'Inteligjencë Artificiale.' : 'Artificial Intelligence.'}
+                {isSq ? 'Full-Stack Engineering.' : 'Full-Stack Engineering.'}
               </span>
             </h1>
             
@@ -53,11 +53,11 @@ const Hero: React.FC<HeroProps> = ({ lang, onOpenResume, onOpenChat, showAiChat 
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
               {isSq ? (
                 <>
-                  Unë jam <strong className="text-slate-900 dark:text-white font-semibold">{ERDONA_PROFILE.name}</strong>, studente e vitit të fundit në Shkenca Kompjuterike në <strong className="text-slate-900 dark:text-white font-semibold">UBT</strong>, me specializim në <strong className="text-blue-600 dark:text-blue-400 font-semibold">Data & AI Engineering</strong>. Ndërtoj zgjidhje inteligjente me Python, FastAPI, React, PostgreSQL, dhe modele parashikuese të mësimit makinerik.
+                  Unë jam <strong className="text-slate-900 dark:text-white font-semibold">{ERDONA_PROFILE.name}</strong>, studente e vitit të fundit në Shkenca Kompjuterike në <strong className="text-slate-900 dark:text-white font-semibold">UBT</strong>, me fokus në <strong className="text-blue-600 dark:text-blue-400 font-semibold">Data, AI & Full-Stack Engineering</strong>. Ndërtoj aplikacione komplete dhe zgjidhje inteligjente me Python, FastAPI, React, TypeScript, PostgreSQL dhe Machine Learning.
                 </>
               ) : (
                 <>
-                  I am <strong className="text-slate-900 dark:text-white font-semibold">{ERDONA_PROFILE.name}</strong>, a final-year Computer Science & Engineering student at <strong className="text-slate-900 dark:text-white font-semibold">UBT</strong>, specializing in <strong className="text-blue-600 dark:text-blue-400 font-semibold">Data & AI Engineering</strong>. Building AI-powered and data-driven solutions with Python, FastAPI, React, PostgreSQL, and machine learning.
+                  I am <strong className="text-slate-900 dark:text-white font-semibold">{ERDONA_PROFILE.name}</strong>, a final-year Computer Science & Engineering student at <strong className="text-slate-900 dark:text-white font-semibold">UBT</strong>, focusing on <strong className="text-blue-600 dark:text-blue-400 font-semibold">Data, AI & Full-Stack Engineering</strong>. Building end-to-end applications and intelligent data solutions with Python, FastAPI, React, TypeScript, PostgreSQL, and machine learning.
                 </>
               )}
             </p>
@@ -66,13 +66,13 @@ const Hero: React.FC<HeroProps> = ({ lang, onOpenResume, onOpenChat, showAiChat 
             <div className="pt-2 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <span className="text-slate-400 dark:text-slate-500 text-xs font-bold mr-1">{isSq ? 'Teknologjitë:' : 'Core Stack:'}</span>
               <span className="px-3 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs flex items-center gap-1.5">
-                <Brain className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Python & ML
+                <Brain className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Data & AI / ML
               </span>
               <span className="px-3 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs flex items-center gap-1.5">
                 <Database className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> FastAPI & SQL
               </span>
               <span className="px-3 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs flex items-center gap-1.5">
-                <Code2 className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" /> React & Tailwind
+                <Code2 className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" /> React, TS & Tailwind
               </span>
             </div>
 

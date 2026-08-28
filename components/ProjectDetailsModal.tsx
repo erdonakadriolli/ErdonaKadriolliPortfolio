@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project, Language } from '../types';
-import { X, ExternalLink, Github, CheckCircle, Sparkles, Layers, Terminal } from 'lucide-react';
+import { X, ExternalLink, Github, CheckCircle, Sparkles, Layers } from 'lucide-react';
 
 interface ProjectDetailsModalProps {
   project: Project | null;
@@ -61,23 +61,6 @@ export const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ projec
                 {isSq ? (project.descriptionSq || project.description) : project.description}
               </p>
             </div>
-
-            {/* Metrics Callout */}
-            {project.metrics && (
-              <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-800/80 flex items-center justify-between">
-                <div>
-                  <p className="text-[11px] font-bold text-blue-600 dark:text-blue-300 uppercase tracking-wider">
-                    {isSq ? 'Metrika Kryesore / Performance' : 'Key Performance Metric'}
-                  </p>
-                  <p className="text-xl font-black text-slate-900 dark:text-white mt-0.5">
-                    {project.metrics}
-                  </p>
-                </div>
-                <div className="p-3 bg-blue-600 dark:bg-blue-500 text-white rounded-xl">
-                  <Terminal className="w-5 h-5" />
-                </div>
-              </div>
-            )}
 
             {/* Highlights */}
             {((isSq ? project.highlightsSq : project.highlights) || project.highlights) && (

@@ -91,6 +91,18 @@ const App: React.FC = () => {
     localStorage.setItem('erdona_cv_projects_v4', JSON.stringify(projects));
   }, [projects]);
 
+  // Secret admin shortcut: Ctrl + Shift + A or Alt + A
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') || (e.altKey && e.key.toLowerCase() === 'a')) {
+        e.preventDefault();
+        setIsAdminOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const addProject = (p: Project) => {
     setProjects([p, ...projects]);
   };

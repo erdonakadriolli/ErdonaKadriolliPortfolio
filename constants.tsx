@@ -2,16 +2,16 @@ import { Project, Skill, ExperienceItem, CertificationItem, LanguageProficiency 
 
 export const ERDONA_PROFILE = {
   name: "Erdona Kadriolli",
-  titleEn: "Computer Science & Engineering | Data & AI Engineering",
-  titleSq: "Shkenca Kompjuterike & Inxhinieri | Inxhinieri e të Dhënave & AI",
+  titleEn: "Computer Science & Engineering | Data, AI & Full-Stack Development",
+  titleSq: "Shkenca Kompjuterike & Inxhinieri | Data, AI & Zhvillim Full-Stack",
   location: "Kosovo",
   locationSq: "Kosovë",
   university: "UBT, University for Business and Technology",
   universitySq: "UBT - Universiteti për Biznes dhe Teknologji",
   studyYear: "Final-year Student (Sep 2023 – Present)",
   studyYearSq: "Viti Përmbyllës (Shtator 2023 – Aktual)",
-  specialization: "Data & AI Engineering",
-  specializationSq: "Inxhinieri e të Dhënave & AI",
+  specialization: "Data, AI & Full-Stack Engineering",
+  specializationSq: "Inxhinieri e të Dhënave, AI & Full-Stack",
   photo1: "/Foto1.jpeg",
   photo2: "/Foto2.jpeg",
   avatar: "/Foto1.jpeg",
@@ -20,8 +20,8 @@ export const ERDONA_PROFILE = {
   github: "https://github.com/erdonakadriolli",
   githubUsername: "erdonakadriolli",
   linkedin: "https://linkedin.com/in/erdona-kadriolli",
-  bioEn: "Final-year Computer Science & Engineering student at UBT, specializing in Data & AI Engineering. Hands-on experience with Python, SQL/MySQL, FastAPI, React, machine learning, databases, REST APIs and Git through academic and personal projects. Built AI-powered and data-driven applications and worked with real-world data through national surveys and election operations. Motivated to grow as a software engineer and apply Python and AI skills in a production fintech environment.",
-  bioSq: "Studente e vitit të fundit në Shkenca Kompjuterike dhe Inxhinieri në UBT, me specializim në Inxhinierinë e të Dhënave & AI. Përvojë praktike me Python, SQL/MySQL, FastAPI, React, mësim makinerik, baza të të dhënave, REST API dhe Git përmes projekteve akademike dhe personale. Kam ndërtuar aplikacione të fuqizuara nga AI dhe të bazuara në të dhëna, si dhe kam punuar me të dhëna reale përmes anketave kombëtare dhe operacioneve zgjedhore. E motivuar për t'u zhvilluar si inxhiniere e softuerit dhe për të aplikuar aftësitë në Python dhe AI në mjedise prodhuese.",
+  bioEn: "Final-year Computer Science & Engineering student at UBT, specializing in Data, AI & Full-Stack Engineering. Hands-on experience developing end-to-end applications with Python, FastAPI, React, TypeScript, SQL/PostgreSQL/MySQL, machine learning (scikit-learn), REST APIs, and Git through academic and personal projects. Built production-ready web platforms and data-driven systems, with field experience in national statistics and election operations. Motivated to deliver robust full-stack software and intelligent AI solutions.",
+  bioSq: "Studente e vitit të fundit në Shkenca Kompjuterike dhe Inxhinieri në UBT, me specializim në Inxhinierinë e të Dhënave, AI & Zhvillimin Full-Stack. Përvojë praktike në ndërtimin e aplikacioneve të plota me Python, FastAPI, React, TypeScript, SQL/PostgreSQL/MySQL, mësim makinerik (scikit-learn), REST API dhe Git përmes projekteve akademike dhe reale. Kam zhvilluar platforma moderne web dhe sisteme të orientuara nga të dhënat, me përvojë reale nga terreni me ASK, UNICEF dhe KQZ. E motivuar për të krijuar zgjidhje cilësore softuerike full-stack dhe inteligjencë artificiale.",
   social: {
     linkedin: "https://linkedin.com/in/erdona-kadriolli",
     github: "https://github.com/erdonakadriolli",
@@ -164,45 +164,45 @@ export const PROJECTS: Project[] = [
 ];
 
 export const SKILLS: Skill[] = [
-  // Programming
+  // Full-Stack & Web Development
+  { name: "Full-Stack Architecture", category: "Full-Stack", level: 92 },
+  { name: "React & Vite", category: "Full-Stack", level: 94 },
+  { name: "TypeScript", category: "Full-Stack", level: 90 },
+  { name: "FastAPI & REST APIs", category: "Full-Stack", level: 92 },
+  { name: "Node.js & Express", category: "Full-Stack", level: 86 },
+  { name: "Tailwind CSS", category: "Full-Stack", level: 94 },
+  { name: "WebSockets & Real-time", category: "Full-Stack", level: 85 },
+
+  // Programming Languages
   { name: "Python", category: "Data & AI", level: 95 },
   { name: "Java", category: "Backend", level: 88 },
   { name: "SQL", category: "Backend", level: 92 },
-  { name: "JavaScript", category: "Frontend", level: 88 },
+  { name: "JavaScript", category: "Frontend", level: 90 },
   { name: "PHP", category: "Backend", level: 82 },
-  { name: "HTML / CSS", category: "Frontend", level: 92 },
-
-  // Backend & APIs
-  { name: "FastAPI", category: "Backend", level: 90 },
-  { name: "REST APIs", category: "Backend", level: 92 },
-  { name: "JSON", category: "Backend", level: 95 },
-  { name: "WebSockets", category: "Backend", level: 84 },
+  { name: "HTML5 / CSS3", category: "Frontend", level: 94 },
 
   // Data & AI
   { name: "Pandas", category: "Data & AI", level: 92 },
   { name: "scikit-learn", category: "Data & AI", level: 88 },
   { name: "Machine Learning", category: "Data & AI", level: 88 },
-  { name: "Data Analysis", category: "Data & AI", level: 92 },
+  { name: "Data Analysis & EDA", category: "Data & AI", level: 92 },
   { name: "Data Visualization (Matplotlib, Seaborn)", category: "Data & AI", level: 90 },
 
-  // Databases
+  // Databases & Backend
   { name: "MySQL", category: "Backend", level: 90 },
   { name: "PostgreSQL", category: "Backend", level: 88 },
-  { name: "Database Design", category: "Backend", level: 90 },
+  { name: "Database Design & Relational Modeling", category: "Backend", level: 92 },
 
-  // Frontend
-  { name: "React", category: "Frontend", level: 90 },
-  { name: "Vite", category: "Frontend", level: 90 },
-  { name: "Tailwind CSS", category: "Frontend", level: 92 },
-  { name: "Streamlit", category: "Frontend", level: 86 },
+  // Frontend & UI
+  { name: "Streamlit", category: "Frontend", level: 88 },
 
   // Tools & Platforms
-  { name: "Git", category: "Tools & Cloud", level: 90 },
-  { name: "Docker", category: "Tools & Cloud", level: 78 },
+  { name: "Git & GitHub", category: "Tools & Cloud", level: 92 },
+  { name: "Docker", category: "Tools & Cloud", level: 80 },
+  { name: "Firebase Firestore", category: "Tools & Cloud", level: 88 },
+  { name: "Vercel Deployment", category: "Tools & Cloud", level: 92 },
+  { name: "VS Code", category: "Tools & Cloud", level: 96 },
   { name: "XAMPP", category: "Tools & Cloud", level: 88 },
-  { name: "VS Code", category: "Tools & Cloud", level: 95 },
-  { name: "Firebase", category: "Tools & Cloud", level: 86 },
-  { name: "Vercel", category: "Tools & Cloud", level: 90 },
 
   // Core Strengths
   { name: "Analytical Thinking", category: "Soft Skills", level: 96 },

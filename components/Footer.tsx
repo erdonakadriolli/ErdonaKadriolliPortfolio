@@ -1,7 +1,7 @@
 import React from 'react';
 import { ERDONA_PROFILE } from '../constants';
 import { Language } from '../types';
-import { Heart, Shield } from 'lucide-react';
+import { Lock } from 'lucide-react';
 
 interface FooterProps {
   onAdminClick: () => void;
@@ -27,10 +27,11 @@ const Footer: React.FC<FooterProps> = ({ onAdminClick, lang }) => {
         <div className="flex items-center space-x-6">
           <button 
             onClick={onAdminClick}
-            className="text-slate-400 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-xs font-bold flex items-center gap-1.5 transition-colors"
+            className="text-slate-400 dark:text-slate-600 hover:text-slate-700 dark:hover:text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition-colors group"
+            title={isSq ? 'Paneli Privat i Administratorit (Erdona)' : 'Private Admin Panel (Erdona Only)'}
           >
-            <Shield className="w-3.5 h-3.5" />
-            <span>{isSq ? 'Menaxho Projektet' : 'Project Manager'}</span>
+            <Lock className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:text-blue-500 transition-all" />
+            <span className="opacity-75 group-hover:opacity-100">{isSq ? 'Admin' : 'Admin'}</span>
           </button>
           
           <a 
@@ -47,3 +48,4 @@ const Footer: React.FC<FooterProps> = ({ onAdminClick, lang }) => {
 };
 
 export default Footer;
+

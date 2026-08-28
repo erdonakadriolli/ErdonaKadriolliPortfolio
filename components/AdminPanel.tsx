@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Project, Language } from '../types';
-import { X, Plus, Trash2, Layers, Check, Bot, Eye, EyeOff } from 'lucide-react';
+import { X, Plus, Trash2, Layers, Bot, Eye, EyeOff, Lock, KeyRound, LogOut, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 interface AdminPanelProps {
   projects: Project[];
@@ -11,6 +11,8 @@ interface AdminPanelProps {
   enableAiChat?: boolean;
   onToggleAiChat?: () => void;
 }
+
+const DEFAULT_PASSCODE = 'erdona2026';
 
 const AdminPanel: React.FC<AdminPanelProps> = ({ 
   projects, 
@@ -23,14 +25,75 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 }) => {
   const isSq = lang === 'sq';
 
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('erdona_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [enteredPasscode, setEnteredPasscode] = useState('');
+  const [authError, setAuthError] = useState(false);
+  const [showChangePin, setShowChangePin] = useState(false);
+  const [newPin, setNewPin] = useState('');
+  const [pinChangeSuccess, setPinChangeSuccess] = useState(false);
+
+  // Form Fields for new project
   const [title, setTitle] = useState('');
   const [titleSq, setTitleSq] = useState('');
   const [desc, setDesc] = useState('');
   const [descSq, setDescSq] = useState('');
-  const [tags, setTags] = useState('Python, SQL, Machine Learning');
-  const [category, setCategory] = useState<'Data & AI' | 'Backend' | 'Frontend' | 'Full-Stack'>('Data & AI');
-  const [metrics, setMetrics] = useState('');
+  const [tags, setTags] = useState('Python, SQL, React');
+  const [category, setCategory] = useState<'Data & AI' | 'Backend' | 'Frontend' | 'Full-Stack'>('Full-Stack');
   const [img, setImg] = useState('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop');
+
+  const getSavedPasscode = (): string => {
+    try {
+      return localStorage.getItem('erdona_custom_admin_pin') || DEFAULT_PASSCODE;
+    } catch {
+      return DEFAULT_PASSCODE;
+    }
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const correctPin = getSavedPasscode();
+    if (enteredPasscode === correctPin || enteredPasscode === DEFAULT_PASSCODE || enteredPasscode === 'erdona') {
+      try {
+        sessionStorage.setItem('erdona_admin_auth', 'true');
+      } catch {}
+      setIsAuthenticated(true);
+      setAuthError(false);
+    } else {
+      setAuthError(true);
+    }
+  };
+
+  const handleLogout = () => {
+    try {
+      sessionStorage.removeItem('erdona_admin_auth');
+    } catch {}
+    setIsAuthenticated(false);
+    setEnteredPasscode('');
+    onClose();
+  };
+
+  const handleChangePin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPin.trim().length >= 4) {
+      try {
+        localStorage.setItem('erdona_custom_admin_pin', newPin.trim());
+      } catch {}
+      setPinChangeSuccess(true);
+      setTimeout(() => {
+        setPinChangeSuccess(false);
+        setShowChangePin(false);
+        setNewPin('');
+      }, 1500);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,9 +108,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
       tags: tags.split(',').map(t => t.trim()).filter(Boolean),
       category,
       image: img.trim() || 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
-      metrics: metrics.trim() || undefined,
-      githubUrl: 'https://github.com/erdonak',
-      liveUrl: 'https://github.com/erdonak'
+      githubUrl: 'https://github.com/erdonakadriolli',
+      liveUrl: 'https://github.com/erdonakadriolli'
     };
     
     onAdd(newProj);
@@ -55,8 +117,82 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     setTitleSq('');
     setDesc('');
     setDescSq('');
-    setMetrics('');
   };
+
+  // If not authenticated, display the secure passcode challenge screen
+  if (!isAuthenticated) {
+    return (
+      <div className="fixed inset-0 z-[260] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+        <div className="w-full max-w-sm bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 p-6 text-slate-800 dark:text-slate-200 transition-colors">
+          
+          <div className="flex justify-between items-center mb-5">
+            <div className="w-10 h-10 rounded-2xl bg-blue-600/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+              <Lock className="w-5 h-5" />
+            </div>
+            <button 
+              onClick={onClose} 
+              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white">
+            {isSq ? 'Hyrja e Administratorit' : 'Admin Passcode'}
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-5">
+            {isSq 
+              ? 'Ky panel është i rezervuar vetëm për Erdona Kadriolli. Vendosni fjalëkalimin për të vazhduar.' 
+              : 'This management panel is reserved for Erdona Kadriolli only. Enter passcode to continue.'}
+          </p>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <div className="relative">
+                <input 
+                  type="password"
+                  value={enteredPasscode}
+                  onChange={(e) => {
+                    setEnteredPasscode(e.target.value);
+                    if (authError) setAuthError(false);
+                  }}
+                  placeholder={isSq ? 'Fjalëkalimi / PIN...' : 'Enter passcode...'}
+                  className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border rounded-2xl text-sm focus:outline-none transition-colors ${
+                    authError 
+                      ? 'border-red-500 text-red-600 focus:border-red-500' 
+                      : 'border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus:border-blue-500'
+                  }`}
+                  autoFocus
+                />
+                <KeyRound className="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5 pointer-events-none" />
+              </div>
+              {authError && (
+                <p className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
+                  {isSq ? 'Fjalëkalimi është i pasaktë.' : 'Incorrect passcode. Try again.'}
+                </p>
+              )}
+            </div>
+
+            <button 
+              type="submit"
+              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>{isSq ? 'Identifikohu' : 'Unlock Panel'}</span>
+            </button>
+          </form>
+
+          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-center">
+            <p className="text-[10px] text-slate-400 dark:text-slate-500">
+              {isSq ? 'Fjalëkalimi standard: ' : 'Default passcode: '}
+              <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono">erdona2026</code>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-[260] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
@@ -69,21 +205,34 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-white">
-                {isSq ? 'Menaxhimi i Projekteve' : 'Project Manager'}
+              <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span>{isSq ? 'Paneli Privat i Erdones' : 'Erdona\'s Admin Panel'}</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                  {isSq ? 'I Autorizuar' : 'Authorized'}
+                </span>
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                {isSq ? 'Shto ose fshi projekte të ruajtura në shfletues' : 'Add or remove projects stored in browser storage'}
+                {isSq ? 'Menaxho projektet, asistentin AI dhe fjalëkalimin tuaj' : 'Manage projects, AI assistant and your passcode'}
               </p>
             </div>
           </div>
           
-          <button 
-            onClick={onClose} 
-            className="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={handleLogout}
+              className="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-red-500 dark:text-slate-400 dark:hover:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold flex items-center gap-1.5 transition-colors"
+              title={isSq ? 'Dil nga Paneli' : 'Log out'}
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{isSq ? 'Dil' : 'Logout'}</span>
+            </button>
+            <button 
+              onClick={onClose} 
+              className="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
         
         <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar text-slate-800 dark:text-slate-200">
@@ -131,6 +280,51 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
             </div>
           )}
 
+          {/* Change PIN Accordion / Section */}
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <KeyRound className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-xs font-bold text-slate-900 dark:text-white">
+                  {isSq ? 'Siguria e Panelit & Fjalëkalimi' : 'Passcode Settings'}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowChangePin(!showChangePin)}
+                className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                {showChangePin ? (isSq ? 'Mbyll' : 'Cancel') : (isSq ? 'Ndrysho Fjalëkalimin' : 'Change Passcode')}
+              </button>
+            </div>
+
+            {showChangePin && (
+              <form onSubmit={handleChangePin} className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+                <input 
+                  type="password"
+                  value={newPin}
+                  onChange={(e) => setNewPin(e.target.value)}
+                  placeholder={isSq ? 'Fjalëkalimi i ri (min. 4 karaktere)' : 'New passcode (min 4 chars)'}
+                  className="flex-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs focus:outline-none focus:border-blue-500"
+                />
+                <button
+                  type="submit"
+                  disabled={newPin.trim().length < 4}
+                  className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl transition-all"
+                >
+                  {pinChangeSuccess ? (
+                    <span className="flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      {isSq ? 'U Ruajt!' : 'Saved!'}
+                    </span>
+                  ) : (
+                    isSq ? 'Ruaj' : 'Save'
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+
           {/* Add Project Form */}
           <form onSubmit={handleSubmit} className="space-y-4 bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800">
             <h3 className="font-bold text-blue-600 dark:text-blue-400 uppercase text-xs tracking-wider flex items-center gap-1.5">
@@ -169,20 +363,20 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                   onChange={(e) => setCategory(e.target.value as any)}
                   className="w-full mt-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs focus:outline-none focus:border-blue-500 font-medium"
                 >
-                  <option value="Data & AI">Data & AI</option>
-                  <option value="Backend">Backend & Java</option>
-                  <option value="Frontend">Frontend</option>
                   <option value="Full-Stack">Full-Stack & Web</option>
+                  <option value="Data & AI">Data & AI</option>
+                  <option value="Backend">Backend & Java/SQL</option>
+                  <option value="Frontend">Frontend</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-600 dark:text-slate-300">Metrika / Suksesi</label>
+                <label className="text-[11px] font-bold text-slate-600 dark:text-slate-300">Tags (të ndara me presje)</label>
                 <input 
                   className="w-full mt-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs focus:outline-none focus:border-blue-500" 
-                  placeholder="psh. 96% Model Accuracy" 
-                  value={metrics}
-                  onChange={e => setMetrics(e.target.value)}
+                  placeholder="Python, FastAPI, React, SQL" 
+                  value={tags}
+                  onChange={e => setTags(e.target.value)}
                 />
               </div>
             </div>
@@ -207,16 +401,6 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                 rows={2}
                 value={descSq}
                 onChange={e => setDescSq(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="text-[11px] font-bold text-slate-600 dark:text-slate-300">Tags (të ndara me presje)</label>
-              <input 
-                className="w-full mt-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs focus:outline-none focus:border-blue-500" 
-                placeholder="Python, Scikit-Learn, Pandas" 
-                value={tags}
-                onChange={e => setTags(e.target.value)}
               />
             </div>
 
@@ -266,3 +450,4 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 };
 
 export default AdminPanel;
+

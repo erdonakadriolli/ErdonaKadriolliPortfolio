@@ -25,7 +25,7 @@ export interface Message {
 
 export interface Skill {
   name: string;
-  category: 'Data & AI' | 'Backend' | 'Frontend' | 'Tools & Cloud' | 'Soft Skills';
+  category: 'Data & AI' | 'Backend' | 'Frontend' | 'Full-Stack' | 'Tools & Cloud' | 'Soft Skills';
   level?: number; // 1-100
   iconName?: string;
 }
