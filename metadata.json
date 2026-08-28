@@ -1,0 +1,10 @@
+{
+  "name": "Erdona Kadriolli Portfolio",
+  "description": "A high-end, interactive personal portfolio website for Erdona Kadriolli, featuring an integrated AI assistant driven by Gemini for real-time visitor interaction.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
